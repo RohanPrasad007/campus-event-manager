@@ -1,0 +1,329 @@
+* {
+  box-sizing: border-box;
+}
+
+/* ================= BASE STYLES ================= */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ================= 1. HEX COLOUR FORM ================= */
+  --brand: #1d4ed8;            /* Default base brand color (overridden in style.css) */
+  --brand-hover: #1e40af;
+  --ink-heading: #333333;       /* Default base heading color (overridden in style.css) */
+  --ink-link-visited: #6f42c1;
+
+  /* ================= 2. RGB() COLOUR FORM ================= */
+  --ink: rgb(33, 37, 41);
+  --paper: rgb(248, 249, 250);
+  --surface: rgb(255, 255, 255);
+  --surface-alt: rgb(241, 245, 249);
+  --surface-hover: rgb(233, 236, 239);
+  --border: rgb(222, 226, 230);
+  --border-muted: rgb(241, 245, 249);
+  --border-strong: rgb(206, 212, 218);
+  --ink-muted: rgb(108, 117, 125);
+  --ink-subtle: rgb(173, 181, 189);
+  --ink-inverted: rgb(255, 255, 255);
+  --skip-bg: rgb(0, 0, 0);
+  --skip-ink: rgb(255, 255, 255);
+  --brand-rgb: 29, 78, 216;
+  --shadow-color: 0, 0, 0;
+
+  /* ================= 3. HSL() COLOUR FORM ================= */
+  --accent: hsl(199, 89%, 48%);
+  --accent-hover: hsl(201, 96%, 32%);
+  --accent-subtle: hsl(204, 100%, 97%);
+  --focus-ring: hsl(39, 100%, 64%);
+  --focus-bg: hsl(48, 100%, 90%);
+  --focus-ink: hsl(0, 0%, 0%);
+
+  /* ================= 4. SEMI-TRANSPARENT COLOUR FORM ================= */
+  --overlay-banner: rgb(0 0 0 / 40%);
+  --brand-subtle: rgb(29 78 216 / 8%);
+
+  /* ================= 5. TYPE SCALE & TYPOGRAPHY ================= */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-h1: clamp(1.5rem, 4vw, 3rem); /* Fluid heading scale (h1) */
+  --font-size-h2: 1.75rem;                  /* Subheading scale (h2) */
+  --font-size-h3: 1.25rem;                  /* Section title scale (h3) */
+  --font-size-body: 1rem;                   /* Standard body text scale */
+  --font-size-small: 0.875rem;              /* Small text scale */
+  --line-height-body: 1.5;                  /* Line-height: 1.5 on body text */
+
+  /* Backward-compatible Aliases */
+  --primary-color: var(--brand);
+  --primary-hover: var(--brand-hover);
+  --heading-color: var(--ink-heading);
+  --bg-color: var(--paper);
+  --card-bg: var(--surface);
+  --text-color: var(--ink);
+  --muted-text: var(--ink-muted);
+  --border-color: var(--border);
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+}
+
+header {
+  grid-area: header;
+}
+
+nav {
+  grid-area: nav;
+}
+
+.nav-links {
+  display: none;
+}
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+@media (min-width: 40rem) {
+  /* B6: reveal the full nav row once there's room; hamburger no longer needed */
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border); /* Hairline border in px */
+  margin: 1.25rem 0;                  /* Spacing in rem */
+}
+
+/* Grouped Selector for Shared Heading Styles */
+h1, h2, h3 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--font-size-h1);      /* Type scale h1 */
+  color: var(--ink-heading);           /* Default base heading color (overridden in style.css) */
+  margin-bottom: 0.5rem;               /* Spacing in rem */
+}
+
+h2 {
+  font-size: var(--font-size-h2);      /* Type scale h2 */
+  color: var(--brand);
+  margin-top: 1.5rem;                  /* Spacing in rem */
+  margin-bottom: 0.75rem;              /* Spacing in rem */
+}
+
+h3 {
+  font-size: var(--font-size-h3);      /* Type scale h3 */
+  color: var(--ink-heading);
+}
+
+p {
+  font-size: var(--font-size-body);    /* Type scale body */
+  line-height: 1.5;                    /* Line-height: 1.5 on body text */
+  max-width: 65ch;                     /* Cap reading width to 65ch */
+  margin-bottom: 1rem;                 /* Spacing in rem */
+}
+
+.text-center p,
+p.text-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+small,
+.small {
+  font-size: var(--font-size-small);   /* Type scale small */
+}
+
+/* Link Pseudo-class States */
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  transition: color 0.2s ease, outline 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+a:visited {
+  color: var(--ink-link-visited);
+}
+
+a:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+  opacity: 0.95;
+}
+
+/* Accessibility: Skip link */
+.skip {
+  position: absolute;
+  top: -6.25rem;                       /* Relative positioning in rem */
+  left: 0.625rem;                      /* Relative positioning in rem */
+  background: var(--skip-bg);
+  color: var(--skip-ink);
+  padding: 0.75rem 1.25rem;            /* Spacing in rem */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 9999;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 12px rgba(var(--shadow-color), 0.3);
+  transition: top 0.2s ease;
+}
+
+.skip:focus {
+  top: 0.625rem;                       /* Relative positioning in rem */
+  outline: 3px solid var(--focus-ring); /* Hairline outline in px */
+  outline-offset: 2px;
+}
+
+/* Layout Container Utilities */
+header, main, footer {
+  width: min(90%, 60rem);              /* Capped container width using min(90%, 60rem) */
+  margin: 0 auto;                      /* Centered page container with margin: 0 auto */
+  padding: 1.25rem;                    /* Spacing in rem */
+}
+
+main {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}
+
+/* Table Utilities */
+table.nav-table {
+  width: 80%;                          /* Relative width using % */
+  max-width: 90vw;                     /* Viewport width unit using vw */
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+table.nav-table td {
+  text-align: center;
+}
+
+table.schedule-table {
+  width: 100%;                         /* Relative width using % */
+  border-collapse: collapse;
+  border: 1px solid var(--border);     /* Hairline border in px */
+  margin: 1rem 0;                      /* Spacing in rem */
+}
+
+table.schedule-table th,
+table.schedule-table td {
+  padding: 0.625rem;                   /* Spacing in rem */
+  border: 1px solid var(--border);     /* Hairline border in px */
+  text-align: left;
+}
+
+table.gallery-table {
+  width: 100%;                         /* Relative width using % */
+  border-collapse: collapse;
+  margin: 1rem 0;                      /* Spacing in rem */
+}
+
+table.gallery-table td {
+  width: 25%;                          /* Relative column width using % */
+  text-align: center;
+  vertical-align: top;
+  padding: 0.5rem;                     /* Spacing in rem */
+}
+
+/* Responsive Card Grid */
+.events-grid-wrapper {
+  width: 100%;
+  margin: 1.25rem 0;
+}
+
+.events-grid-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* repeat() with auto-fit and fr unit */
+  gap: 1.5rem;                                                /* Grid gap for card spacing */
+}
+
+.events-grid-wrapper li {
+  display: flex;
+}
+
+.events-grid-wrapper article {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 40rem) {
+  /* B6: reveal the full nav row once there's room; hamburger no longer needed */
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  body {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "header header"
+      "nav    nav"
+      "main   main"
+      "footer footer";
+  }
+
+  /* Large screen layout enhancement */
+  main {
+    max-width: 1200px;
+  }
+}

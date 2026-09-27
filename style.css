@@ -1,0 +1,727 @@
+* {
+  box-sizing: border-box;
+}
+
+/* ================= BASE STYLES ================= */
+
+/* Broad Reset & Variables */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ================= 1. HEX COLOUR FORM ================= */
+  --brand: #2563eb;                 /* Hex: primary brand color (DELIBERATE OVERRIDE of base.css #1d4ed8) */
+  --brand-hover: #1d4ed8;           /* Hex: brand hover state */
+  --ink-heading: #0b3954;           /* Hex: deep navy heading (DELIBERATE OVERRIDE of base.css) */
+  --ink-link-visited: #7c3aed;      /* Hex: royal purple visited link */
+
+  /* ================= 2. RGB() COLOUR FORM ================= */
+  --ink: rgb(15, 23, 42);           /* rgb(): primary deep slate body text */
+  --paper: rgb(248, 250, 252);      /* rgb(): canvas page background */
+  --surface: rgb(255, 255, 255);    /* rgb(): card & container background */
+  --surface-alt: rgb(241, 245, 249);/* rgb(): secondary surface / zebra rows */
+  --surface-hover: rgb(226, 232, 240); /* rgb(): surface hover */
+  --border: rgb(226, 232, 240);     /* rgb(): divider & card border */
+  --border-muted: rgb(241, 245, 249); /* rgb(): subtle border */
+  --border-strong: rgb(203, 213, 225);/* rgb(): form input border */
+  --ink-muted: rgb(100, 116, 139);  /* rgb(): secondary text */
+  --ink-subtle: rgb(148, 163, 184); /* rgb(): placeholder hints */
+  --ink-inverted: rgb(255, 255, 255);/* rgb(): white text on buttons */
+  --skip-bg: rgb(15, 23, 42);       /* rgb(): skip link background */
+  --skip-ink: rgb(255, 255, 255);   /* rgb(): skip link text */
+  --brand-rgb: 37, 99, 235;         /* rgb coordinates for alpha channels */
+  --shadow-color: 15, 23, 42;
+
+  /* ================= 3. HSL() COLOUR FORM ================= */
+  --accent: hsl(199, 89%, 48%);     /* hsl(): vibrant ocean cyan accent */
+  --accent-hover: hsl(201, 96%, 32%); /* hsl(): deeper cyan hover */
+  --accent-subtle: hsl(204, 100%, 97%); /* hsl(): soft cyan background tint */
+  --focus-ring: hsl(38, 92%, 50%);  /* hsl(): high-visibility amber focus ring */
+  --focus-bg: hsl(48, 96%, 89%);    /* hsl(): soft amber highlight for focus */
+  --focus-ink: hsl(222, 47%, 11%);  /* hsl(): focus text color */
+
+  /* ================= 4. SEMI-TRANSPARENT COLOUR FORM ================= */
+  --overlay-banner: rgb(0 0 0 / 40%); /* Semi-transparent rgb() with alpha: overlay on banner */
+  --brand-subtle: rgb(37 99 235 / 8%); /* Semi-transparent brand tint for navigation */
+
+  /* ================= 5. TYPE SCALE & TYPOGRAPHY ================= */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-h1: clamp(1.5rem, 4vw, 3rem); /* Fluid heading scale (h1) using rem & vw */
+  --font-size-h2: 1.75rem;                  /* Subheading scale (h2) */
+  --font-size-h3: 1.25rem;                  /* Section title scale (h3) */
+  --font-size-body: 1rem;                   /* Standard body text scale */
+  --font-size-small: 0.875rem;              /* Small text / caption scale */
+  --line-height-body: 1.5;                  /* Line-height: 1.5 on body text */
+
+  /* Backward-compatible Aliases */
+  --primary-color: var(--brand);
+  --primary-hover: var(--brand-hover);
+  --heading-color: var(--ink-heading);
+  --bg-color: var(--paper);
+  --card-bg: var(--surface);
+  --text-color: var(--ink);
+  --muted-text: var(--ink-muted);
+  --border-color: var(--border);
+}
+
+/* Base Body & Typography */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5; /* Line-height: 1.5 on body text */
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+}
+
+header {
+  grid-area: header;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+nav {
+  grid-area: nav;
+}
+
+/* Utility Centering Class (replaces obsolete <center> tags) */
+.text-center {
+  text-align: center;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border); /* Hairline border retained in px */
+  margin: 1.25rem 0;                  /* Spacing in rem */
+}
+
+/* Grouped Selector for Shared Heading Styles */
+h1, h2, h3 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  letter-spacing: -0.02em; /* 1. letter-spacing: tighter tracking for modern heading typography */
+}
+
+/* Fluid Heading Typography with clamp() */
+h1 {
+  font-size: var(--font-size-h1);      /* Type scale h1: clamp(1.5rem, 4vw, 3rem) */
+  color: var(--ink-heading);           /* DELIBERATE OVERRIDE: Overrides base.css h1 default color with deep navy blue */
+  margin-bottom: 0.5rem;               /* Spacing in rem */
+}
+
+h2 {
+  font-size: var(--font-size-h2);      /* Type scale h2: 1.75rem */
+  color: var(--brand);                 /* Consuming var(--brand) */
+  margin-top: 1.5rem;                  /* Spacing in rem */
+  margin-bottom: 0.75rem;              /* Spacing in rem */
+}
+
+/* A3: Sibling Selectors */
+
+/* Adjacent sibling: styles only the paragraph immediately after h2 */
+h2 + p {
+  margin-top: 0.625rem;                /* Spacing in rem */
+}
+
+/* General sibling: styles all paragraphs after h2 */
+h2 ~ p {
+  color: var(--ink);
+}
+
+h3 {
+  font-size: var(--font-size-h3);      /* Type scale h3: 1.25rem */
+  color: var(--ink-heading);
+}
+
+p {
+  font-size: var(--font-size-body);    /* Type scale body: 1rem */
+  line-height: 1.5;                    /* Line-height: 1.5 on body text */
+  max-width: 65ch;                     /* Cap reading width to 65ch */
+  margin-bottom: 1rem;                 /* Spacing in rem */
+}
+
+/* Maintain proper horizontal alignment for centered paragraphs within the 65ch cap */
+.text-center p,
+p.text-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Type scale small */
+small,
+.small {
+  font-size: var(--font-size-small);   /* Type scale small: 0.875rem */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Broad Link Pseudo-class States */
+a {
+  color: var(--brand);                 /* Consuming var(--brand) Rule 1 */
+  text-decoration: underline;          /* Explicit underline indicator for hyperlinks */
+  transition: color 0.2s ease, outline 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+a:visited {
+  color: var(--ink-link-visited);
+}
+
+a:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+/* Highly visible focus state for keyboard accessibility */
+a:focus {
+  outline: 3px solid var(--focus-ring); /* Hairline outline in px */
+  outline-offset: 2px;                  /* Hairline offset in px */
+  background-color: var(--focus-bg);
+  color: var(--focus-ink);
+  text-decoration: underline;
+  border-radius: 0.125rem;
+}
+
+/* A4: Select by Attribute */
+
+a[href^="https"]::after {
+  content: " ↗";
+}
+
+[type="email"] {
+  border: 2px solid var(--accent);     /* Hairline border in px */
+}
+
+[type="date"] {
+  border: 2px solid var(--accent);     /* Hairline border in px */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid var(--focus-ring); /* Hairline outline in px */
+  outline-offset: 2px;
+  border-color: var(--focus-ring);
+}
+
+/* Accessibility: Skip link (hidden offscreen normally, revealed on focus) */
+.skip {
+  position: absolute;
+  top: -6.25rem;                       /* Relative positioning in rem */
+  left: 0.625rem;                      /* Relative positioning in rem */
+  background: var(--skip-bg);
+  color: var(--skip-ink);
+  padding: 0.75rem 1.25rem;            /* Spacing in rem */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 9999;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 12px rgba(var(--shadow-color), 0.3);
+  transition: top 0.2s ease;
+}
+
+.skip:focus {
+  top: 0.625rem;                       /* Relative positioning in rem */
+  outline: 3px solid var(--focus-ring); /* Hairline outline in px */
+  outline-offset: 2px;
+}
+
+/* ================= LAYOUT STYLES ================= */
+
+/* Main layout containers: centered with margin: 0 auto and capped with width: min(90%, 60rem) */
+header, nav, main, footer {
+  width: min(90%, 60rem);              /* Capped container width using min(90%, 60rem) */
+  margin: 0 auto;                      /* Centered page container with margin: 0 auto */
+  padding: 1.25rem;                    /* Spacing in rem */
+}
+
+main {
+  grid-area: main;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+footer {
+  grid-area: footer;
+}
+
+/* Banner Component with Semi-Transparent Overlay */
+.site-header {
+  position: relative;
+  text-align: center;
+  border-bottom: 2px solid var(--border); /* Hairline border in px */
+  padding-bottom: 1.5rem;              /* Spacing in rem */
+  margin-bottom: 1.875rem;             /* Spacing in rem */
+  background-color: var(--surface);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* Semi-transparent colour: Overlay on the banner using rgb(0 0 0 / 40%) */
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0 0 0 / 40%);  /* Semi-transparent colour: rgb(0 0 0 / 40%) */
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+
+.home-section {
+  position: relative;
+  background: var(--surface) url("iiit-logo.png") no-repeat right 1.5rem top 1.5rem;
+  background-size: 4.375rem 4.375rem;  /* Relative sizing in rem */
+  padding: 1.5rem;                     /* Spacing in rem */
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);     /* Hairline border in px */
+  margin: 1.5rem 0;                    /* Spacing in rem */
+}
+
+/* Subtle decorative banner overlay accent */
+.home-section::after {
+  content: "";
+  display: block;
+  height: 0.25rem;                     /* Relative height in rem */
+  background-color: var(--overlay-banner); /* Consuming semi-transparent rgb(0 0 0 / 40%) */
+  border-radius: 0.125rem;
+  margin-top: 1.125rem;                /* Spacing in rem */
+}
+
+.about-section {
+  display: none;
+  background-color: var(--surface-alt);
+  border-left: 4px solid var(--brand); /* Hairline accent border in px */
+  padding: 1.5rem;                     /* Spacing in rem */
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;                    /* Spacing in rem */
+}
+
+.about-section.show {
+  display: block;
+}
+
+/* Cascade Specificity Conflict Demonstration: Tag Selector vs Class Selector */
+/* Tag selector rule (Specificity: 0,0,1) — Losing rule (crossed out in DevTools) */
+section {
+  background-color: var(--surface-alt);
+}
+
+/* Class selector rule (Specificity: 0,1,0) — Winning rule (higher specificity overrides tag rule) */
+.events {
+  background-color: var(--surface);
+  border: 2px solid var(--border-strong); /* Hairline border in px */
+  border-radius: 0.625rem;
+  padding: 20px 28px 32px 28px;        /* 4-value shorthand: Top (20px), Right (28px), Bottom (32px), Left (28px) */
+  margin: 1.5rem 0;                    /* Spacing in rem */
+  box-shadow: 0 2px 4px rgba(var(--shadow-color), 0.05);
+}
+
+.events-grid-wrapper {
+  width: 100%;                         /* Relative width using % */
+  margin: 1.25rem 0;                   /* Spacing in rem */
+}
+
+.events-grid-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* repeat() with auto-fit and fr unit */
+  gap: 1.5rem;                                                /* Grid gap for card spacing */
+}
+
+.events-grid-wrapper li {
+  display: flex;
+}
+
+.events-grid-wrapper article {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 40rem) {
+  /* B6: reveal the full nav row once there's room; hamburger no longer needed */
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  body {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "header header"
+      "nav    nav"
+      "main   main"
+      "footer footer";
+  }
+
+  /* Large screen layout enhancement */
+  main {
+    max-width: 1200px;
+  }
+}
+
+/* Table Layout Utilities (replaces obsolete presentational table attributes) */
+
+/* Navbar layout */
+nav table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+nav table tr {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+nav table td {
+  display: block;
+  padding: 4px;
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  nav table tr {
+    gap: 6px 12px;
+    justify-content: center;
+  }
+
+  nav table td {
+    padding: 5px 3px;
+  }
+
+  nav a {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
+table.nav-table {
+  width: 80%;                          /* Relative width using % */
+  max-width: 90vw;                     /* Viewport width unit using vw */
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+table.nav-table td {
+  text-align: center;
+}
+
+.schedule-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 16px 0;
+}
+
+table.schedule-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+  margin: 0;
+}
+
+table.schedule-table th,
+table.schedule-table td {
+  padding: 0.625rem;                   /* Spacing in rem */
+  border: 1px solid var(--border);     /* Hairline border in px */
+  text-align: left;
+}
+
+/* Responsive Gallery */
+table.gallery-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  table-layout: fixed;
+}
+
+table.gallery-table tr {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+table.gallery-table td {
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: top;
+  padding: 8px;
+}
+
+.gallery-table img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Stripe every even table row */
+tr:nth-child(even) {
+  background-color: var(--surface-alt);
+}
+
+/* Remove divider from the last list item */
+li:last-child {
+  border-bottom: none;
+}
+
+/* Style nav links except the active one */
+nav a:not(.active) {
+  opacity: 0.9;
+}
+
+/* Add a marker before figures */
+figure::before {
+  content: "";
+  display: block;
+  width: 0.375rem;                     /* Relative dimension in rem */
+  height: 0.375rem;                    /* Relative dimension in rem */
+  background-color: var(--accent);
+  margin-bottom: 0.5rem;               /* Spacing in rem */
+}
+
+/* Add a quote mark before blockquotes */
+blockquote::before {
+  content: "“";
+  font-size: 2rem;                     /* Sizing in rem */
+  font-weight: bold;
+}
+
+/* Style input hint text */
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-subtle);
+  font-style: italic;
+}
+
+/* ================= COMPONENT STYLES ================= */
+
+/* Navigation Component */
+.nav-links {
+  display: none;
+}
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+@media (min-width: 40rem) {
+  /* B6: reveal the full nav row once there's room; hamburger no longer needed */
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+nav a {
+  color: var(--brand);                 /* Rule 2 consuming var(--brand) */
+  text-decoration: none;
+  text-transform: uppercase;           /* Uppercase navigation menu labels */
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;           /* Spacing in rem */
+  border-radius: 0.25rem;
+  transition: color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+/* A2: Child Combinator */
+/* Descendant selector: nav a selects links anywhere inside <nav> */
+/* Child combinator: nav > table selects only a <table> directly inside <nav> */
+nav > table {
+  width: 80%;                          /* Relative width using % */
+  max-width: 90vw;                     /* Viewport width unit using vw */
+  margin: 0 auto;
+}
+
+/* Semi-transparent hover state using opacity and tint */
+nav a:hover,
+nav a:focus {
+  color: var(--brand-hover);
+  background-color: var(--brand-subtle);
+  text-decoration: underline;
+  opacity: 0.95;                       /* Semi-transparent opacity on hover state */
+}
+
+.brand-subtitle {
+  color: var(--brand);
+}
+
+/* Cards & Figures */
+article {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  margin: 20px 0;
+}
+
+article:hover {
+  box-shadow: 0 6px 16px rgba(var(--shadow-color), 0.12);
+}
+
+figcaption {
+  text-align: center;                  /* Centered photo captions */
+  font-size: 0.9rem;                   /* Text sizing in rem */
+  color: var(--ink-muted);
+  margin-top: 0.375rem;                /* Spacing in rem */
+  text-decoration: initial;            /* Resets text-decoration to default */
+}
+
+/* Accordion Component */
+details {
+  background-color: var(--surface);
+  border: 1px solid var(--border);     /* Hairline border in px */
+  border-radius: 0.375rem;
+  padding: 0.875rem;                   /* Spacing in rem */
+  margin-bottom: 0.75rem;              /* Spacing in rem */
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: unset;                        /* Unset removes explicit color and inherits */
+}
+
+/* Form & Input Components */
+form {
+  width: calc(100% - 2rem);            /* Relative width using calc(100% - 2rem) */
+  max-width: 37.5rem;                  /* Max-width in rem */
+  margin: 0 auto;
+  padding: 1.5rem;                     /* Spacing in rem */
+  background-color: var(--surface);
+  border: 1px solid var(--border);     /* Hairline border in px */
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(var(--shadow-color), 0.05);
+}
+
+label {
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: 0.375rem;             /* Spacing in rem */
+  color: var(--ink);
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;                         /* Relative width using % */
+  box-sizing: border-box;
+  padding: 0.625rem 0.875rem;          /* Spacing in rem */
+  font-size: 1rem;                     /* Text sizing in rem */
+  font-family: inherit;                /* Uses parent element font */
+  color: var(--ink);
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-strong); /* Hairline border in px */
+  border-radius: 0.375rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(var(--brand-rgb), 0.2);
+}
+
+button[type="submit"] {
+  display: inline-block;
+  background-color: var(--brand);      /* Consuming var(--brand) */
+  color: var(--ink-inverted);
+  border: none;
+  padding: 0.75rem 1.75rem;            /* Spacing in rem */
+  font-size: 1rem;                     /* Text sizing in rem */
+  font-weight: 600;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(var(--brand-rgb), 0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+/* Semi-transparent colour: rgb(0 0 0 / 40%) and opacity on hover state */
+button[type="submit"]:hover {
+  background-color: var(--brand-hover);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 40%); /* Semi-transparent colour on button hover state */
+  opacity: 0.95;                         /* Semi-transparent opacity on hover state */
+}
+
+button[type="submit"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--brand-rgb), 0.4);
+}
+
+/* Gallery on small phones */
+@media (max-width: 480px) {
+  table.gallery-table tr {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  table.gallery-table td {
+    padding: 5px;
+  }
+
+  .gallery-table img {
+    height: 120px;
+  }
+
+  figcaption {
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+}
