@@ -725,3 +725,13 @@ button[type="submit"]:focus {
     overflow-wrap: anywhere;
   }
 }
+/* Hamburger Navigation Toggle */
+
+.nav-links {
+    display: none;
+}
+
+.nav-links.active {
+    display: flex;
+    flex-direction: column;
+}

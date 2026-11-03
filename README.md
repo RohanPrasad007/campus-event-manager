@@ -152,3 +152,150 @@ This is a pure vanilla web application that requires no build tools or package i
 * **W3C CSS Level 3 Validation**: Compliant syntax with zero parse errors.
 * **Semantic HTML5**: Fully validated document structure.
 * **WCAG 2.1 Accessibility**: High-contrast color choices, skip-to-content link, keyboard focus outlines, and visible interactive hover states.
+
+### 8. Store Values in Variables (JavaScript)
+
+- Use `const` by default and `let` when the value needs to change.
+- Demonstrate string, number, and boolean data types.
+- Avoid using `var`.
+
+```javascript
+const eventTitle = "Tech Fest - Innovision";
+const totalSeats = 100;
+const isOnline = false;
+
+let seatsLeft = 50;
+seatsLeft = seatsLeft - 1;
+
+### 9. Model the Events as Data (JavaScript)
+
+- Create an array of objects, with each object representing an event.
+- Each event must contain `title`, `date`, `seats`, and `online`.
+- Use this array as the single source of truth for the events displayed on the page.
+
+### Code Example
+
+```javascript
+const events = [
+    {
+        title: "Tech Fest - Innovision",
+        date: "2026-11-15",
+        seats: 100,
+        online: false
+    },
+    {
+        title: "Coding Competition",
+        date: "2026-11-20",
+        seats: 50,
+        online: true
+    },
+    {
+        title: "Cultural Fest",
+        date: "2026-11-25",
+        seats: 200,
+        online: false
+    }
+];
+---
+
+### 10. Decide with Control Flow (JavaScript)
+
+- Use `if / else` statements to check the number of available seats.
+- Display `"Full"` when seats are exactly 0.
+- Display `"Few left"` when seats are less than 5.
+- Otherwise, display `"Open"`.
+
+### Code Example
+
+```javascript
+const event = {
+    title: "Tech Fest - Innovision",
+    seats: 3
+};
+
+let eventStatus;
+
+if (event.seats === 0) {
+    eventStatus = "Full";
+} else if (event.seats < 5) {
+    eventStatus = "Few left";
+} else {
+    eventStatus = "Open";
+}
+
+console.log(eventStatus);
+---
+
+### 11. Repeat with a Loop (JavaScript)
+
+- Use a `for...of` loop to iterate through the events array.
+- Process every event one by one.
+- Display the title, date, seats, and online status of each event.
+
+### Code Example
+
+```javascript
+const events = [
+    {
+        title: "Tech Fest - Innovision",
+        date: "2026-11-15",
+        seats: 100,
+        online: false
+    },
+    {
+        title: "Coding Competition",
+        date: "2026-11-20",
+        seats: 50,
+        online: true
+    },
+    {
+        title: "Cultural Fest",
+        date: "2026-11-25",
+        seats: 200,
+        online: false
+    }
+];
+
+for (const event of events) {
+    console.log("Title:", event.title);
+    console.log("Date:", event.date);
+    console.log("Seats:", event.seats);
+    console.log("Online:", event.online);
+}
+---
+
+### 12. Package Logic in a Function (JavaScript)
+
+- Create a function named `formatEvent(ev)`.
+- Pass an event object as a parameter.
+- Return a readable one-line string containing event details.
+- Call the function and use its returned result.
+
+### Code Example
+
+```javascript
+const event = {
+    title: "Tech Fest - Innovision",
+    date: "2026-11-15",
+    seats: 100,
+    online: false
+};
+
+function formatEvent(ev) {
+    return `${ev.title} | Date: ${ev.date} | Seats: ${ev.seats} | Online: ${ev.online}`;
+}
+
+const formattedEvent = formatEvent(event);
+
+console.log(formattedEvent);
+
+/* Hamburger Navigation Toggle */
+
+.nav-links {
+    display: none;
+}
+
+.nav-links.active {
+    display: flex;
+    flex-direction: column;
+}
