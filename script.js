@@ -306,3 +306,40 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load events after setting up the page interactions.
   loadEvents();
 });
+const searchInput = document.getElementById("eventSearch");
+const eventItems = document.querySelectorAll(".events-grid-wrapper li");
+
+searchInput.addEventListener("input", function () {
+    const searchText = searchInput.value.toLowerCase();
+
+    eventItems.forEach(function (item) {
+        const eventText = item.textContent.toLowerCase();
+
+        if (eventText.includes(searchText)) {
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    });
+});
+console.log(events[0].title);
+console.log(events[events.length - 1].seats);
+const jsonString = JSON.stringify(events, null, 2);
+console.log(jsonString);
+
+const parsedAgain = JSON.parse(jsonString);
+console.log(JSON.stringify(parsedAgain) === JSON.stringify(events));
+Promise.all([
+    fetch("events.json").then(response => response.text()),
+    fetch("events.xml").then(response => response.text())
+]).then(([jsonText, xmlText]) => {
+    console.log("JSON Size:", new Blob([jsonText]).size, "bytes");
+    console.log("XML Size:", new Blob([xmlText]).size, "bytes");
+
+    if (jsonText.length > xmlText.length) {
+        console.log("JSON file is larger.");
+    } else {
+        console.log("XML file is larger.");
+    }
+});
+
