@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+  <event id="tech-fest">
+    <icon>💻</icon>
+    <title>Tech Fest - Innovision</title>
+    <date>2026-09-12</date>
+    <time>10:00 AM</time>
+    <venue>Main Auditorium</venue>
+    <seats>12</seats>
+    <online>false</online>
+    <description>Annual technical festival featuring coding contests, robotics demonstrations and project exhibitions.</description>
+  </event>
+  <event id="cultural-night">
+    <icon>🎤</icon>
+    <title>Cultural Night - Rangmanch</title>
+    <date>2026-09-20</date>
+    <time>6:00 PM</time>
+    <venue>Open Air Theatre</venue>
+    <seats>4</seats>
+    <online>false</online>
+    <description>An evening of music, dance and drama performances presented by students.</description>
+  </event>
+  <event id="sports-meet">
+    <icon>🏆</icon>
+    <title>Inter-Hostel Sports Meet</title>
+    <date>2026-09-28</date>
+    <time>8:00 AM</time>
+    <venue>College Sports Ground</venue>
+    <seats>0</seats>
+    <online>false</online>
+    <description>Students compete in cricket, football, athletics and other exciting sports.</description>
+  </event>
+  <event id="ai-lecture">
+    <icon>🤖</icon>
+    <title>Guest Lecture on Artificial Intelligence</title>
+    <date>2026-10-05</date>
+    <time>11:00 AM</time>
+    <venue>Seminar Hall 1</venue>
+    <seats>50</seats>
+    <online>true</online>
+    <description>An industry expert discusses recent developments and trends in AI and ML.</description>
+  </event>
+  <event id="hackathon">
+    <icon>⚡</icon>
+    <title>Coding Hackathon - CodeStorm</title>
+    <date>2026-10-15</date>
+    <time>10:00 AM</time>
+    <venue>Computer Lab 2</venue>
+    <seats>100</seats>
+    <online>false</online>
+    <description>A 24-hour hackathon where students work in teams to build innovative projects and solve real-world problems.</description>
+  </event>
+  <event id="web-workshop">
+    <icon>🌐</icon>
+    <title>Workshop on Web Development</title>
+    <date>2026-10-22</date>
+    <time>11:00 AM</time>
+    <venue>Computer Lab 1</venue>
+    <seats>25</seats>
+    <online>true</online>
+    <description>A hands-on beginner-friendly workshop covering HTML, CSS and JavaScript.</description>
+  </event>
+  <event id="photography">
+    <icon>📸</icon>
+    <title>Photography Exhibition - Frames</title>
+    <date>2026-10-30</date>
+    <time>2:00 PM</time>
+    <venue>Central Lawn</venue>
+    <seats>40</seats>
+    <online>false</online>
+    <description>An exhibition showcasing photographs captured by students on different themes.</description>
+  </event>
+  <event id="alumni-meet">
+    <icon>🎓</icon>
+    <title>Annual Alumni Meet</title>
+    <date>2026-11-08</date>
+    <time>10:00 AM</time>
+    <venue>Main Auditorium</venue>
+    <seats>150</seats>
+    <online>false</online>
+    <description>A gathering where alumni interact with current students and share their experiences and career journeys.</description>
+  </event>
+</events>

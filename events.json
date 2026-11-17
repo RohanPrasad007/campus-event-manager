@@ -3,80 +3,96 @@
     "id": "tech-fest",
     "icon": "💻",
     "title": "Tech Fest - Innovision",
-    "date": "12 September 2026",
+    "date": "2026-09-12",
     "dateISO": "2026-09-12",
     "time": "10:00 AM",
     "venue": "Main Auditorium",
-    "description": "Annual technical festival featuring coding contests, robotics demonstrations and project exhibitions."
+    "description": "Annual technical festival featuring coding contests, robotics demonstrations and project exhibitions.",
+    "seats": 12,
+    "online": false
   },
   {
     "id": "cultural-night",
     "icon": "🎤",
     "title": "Cultural Night - Rangmanch",
-    "date": "20 September 2026",
+    "date": "2026-09-20",
     "dateISO": "2026-09-20",
     "time": "6:00 PM",
     "venue": "Open Air Theatre",
-    "description": "An evening of music, dance and drama performances presented by students."
+    "description": "An evening of music, dance and drama performances presented by students.",
+    "seats": 4,
+    "online": false
   },
   {
     "id": "sports-meet",
     "icon": "🏆",
     "title": "Inter-Hostel Sports Meet",
-    "date": "28 September 2026",
+    "date": "2026-09-28",
     "dateISO": "2026-09-28",
     "time": "8:00 AM",
     "venue": "College Sports Ground",
-    "description": "Students compete in cricket, football, athletics and other exciting sports."
+    "description": "Students compete in cricket, football, athletics and other exciting sports.",
+    "seats": 0,
+    "online": false
   },
   {
     "id": "ai-lecture",
     "icon": "🤖",
     "title": "Guest Lecture on Artificial Intelligence",
-    "date": "05 October 2026",
+    "date": "2026-10-05",
     "dateISO": "2026-10-05",
     "time": "11:00 AM",
     "venue": "Seminar Hall 1",
-    "description": "An industry expert discusses recent developments and trends in AI and ML."
+    "description": "An industry expert discusses recent developments and trends in AI and ML.",
+    "seats": 50,
+    "online": true
   },
   {
     "id": "hackathon",
     "icon": "⚡",
     "title": "Coding Hackathon - CodeStorm",
-    "date": "15 October 2026",
+    "date": "2026-10-15",
     "dateISO": "2026-10-15",
     "time": "10:00 AM",
     "venue": "Computer Lab 2",
-    "description": "A 24-hour hackathon where students work in teams to build innovative projects and solve real-world problems."
+    "description": "A 24-hour hackathon where students work in teams to build innovative projects and solve real-world problems.",
+    "seats": 100,
+    "online": false
   },
   {
     "id": "web-workshop",
     "icon": "🌐",
     "title": "Workshop on Web Development",
-    "date": "22 October 2026",
+    "date": "2026-10-22",
     "dateISO": "2026-10-22",
     "time": "11:00 AM",
     "venue": "Computer Lab 1",
-    "description": "A hands-on beginner-friendly workshop covering HTML, CSS and JavaScript."
+    "description": "A hands-on beginner-friendly workshop covering HTML, CSS and JavaScript.",
+    "seats": 25,
+    "online": true
   },
   {
     "id": "photography",
     "icon": "📸",
     "title": "Photography Exhibition - Frames",
-    "date": "30 October 2026",
+    "date": "2026-10-30",
     "dateISO": "2026-10-30",
     "time": "2:00 PM",
     "venue": "Central Lawn",
-    "description": "An exhibition showcasing photographs captured by students on different themes."
+    "description": "An exhibition showcasing photographs captured by students on different themes.",
+    "seats": 40,
+    "online": false
   },
   {
     "id": "alumni-meet",
     "icon": "🎓",
     "title": "Annual Alumni Meet",
-    "date": "08 November 2026",
+    "date": "2026-11-08",
     "dateISO": "2026-11-08",
     "time": "10:00 AM",
     "venue": "Main Auditorium",
-    "description": "A gathering where alumni interact with current students and share their experiences and career journeys."
+    "description": "A gathering where alumni interact with current students and share their experiences and career journeys.",
+    "seats": 150,
+    "online": false
   }
 ]
