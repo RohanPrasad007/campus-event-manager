@@ -1,28 +1,10 @@
-/**
- * ==============================================================================
- * IIIT Vadodara — Campus Event Manager
- * Web Development Lab (P5)
- * ==============================================================================
- *
- * 1. Single Source of Truth: The `events` array of objects models the event data.
- *    Each object contains:
- *      - title: string
- *      - date: string (YYYY-MM-DD)
- *      - seats: number
- *      - online: boolean
- *    along with metadata (id, icon, time, venue, description) to build the page.
- *
- * 2. Mapping Events: Uses Array.prototype.map to:
- *      - Map each event object to HTML card DOM elements on the page.
- *      - Map each event to <option> elements in the registration dropdown.
- *      - Map events into formatted strings via formatEvent(ev).
- *      - Map events into summary data objects.
- * ==============================================================================
- */
+const sampleEventTitle = "Tech Fest - Innovision"; // string
+const totalEventSeats = 100;                      // number
+const isEventOnline = false;                      // boolean
 
-// ------------------------------------------------------------------------------
-// 1. DATA MODEL (Single Source of Truth)
-// ------------------------------------------------------------------------------
+let sampleSeatsLeft = 50;                         // let when value needs to change
+sampleSeatsLeft = sampleSeatsLeft - 1;            // reassignment demonstration
+
 const events = [
   {
     id: "tech-fest",
@@ -115,12 +97,9 @@ const events = [
 ];
 
 // ------------------------------------------------------------------------------
-// 2. LOGIC PACKAGING & MAPPING FUNCTIONS
+// A4: Decide with control flow
+// Evaluates availability based on seat numbers: "Full", "Few left", or "Open".
 // ------------------------------------------------------------------------------
-
-/**
- * Helper to determine availability based on seats (Control Flow)
- */
 function getSeatStatus(seats) {
   if (seats === 0) {
     return "Full";
@@ -131,37 +110,51 @@ function getSeatStatus(seats) {
   }
 }
 
-/**
- * Format a single event into a readable one-line string.
- */
+
+console.log("--- [A5] Processing events with for...of loop ---");
+for (const ev of events) {
+  const status = getSeatStatus(ev.seats);
+  console.log(`[for...of] Title: ${ev.title} | Seats: ${ev.seats} (${status}) | Online: ${ev.online}`);
+}
+
+
 function formatEvent(ev) {
   const status = getSeatStatus(ev.seats);
   const mode = ev.online ? "Online" : "In-Person";
   return `${ev.title} | Date: ${ev.date} | Seats: ${ev.seats} (${status}) | Mode: ${mode}`;
 }
 
-// Map the events array to formatted strings
-const mappedEvents = events.map(formatEvent);
-console.log("Mapped Events (formatted strings):", mappedEvents);
+const singleFormattedExample = formatEvent(events[0]);
+console.log("--- [A6] Single Formatted Event:", singleFormattedExample);
 
-// Map the events array to summary data objects
-const mappedEventSummaries = events.map((ev) => ({
-  title: ev.title,
-  date: ev.date,
-  seats: ev.seats,
-  online: ev.online,
-  status: getSeatStatus(ev.seats)
-}));
-console.log("Mapped Event Summaries:", mappedEventSummaries);
 
-/**
- * Map an event object into a DOM card (<li><article>...</article></li>)
- */
+const mappedEvents = events.map((ev) => formatEvent(ev));
+console.log("--- [A7] Mapped Events with Arrow Function:", mappedEvents);
+
+const availableEvents = events.filter((ev) => ev.seats > 0);
+console.log(`--- [A7] Available Events (${availableEvents.length} open):`, availableEvents.map((ev) => ev.title));
+
+
+function demonstrateScope() {
+  const functionScopedConst = "I am private to this function";
+  return functionScopedConst;
+}
+demonstrateScope();
+
+
+
+
+
 function createEventCard(eventItem) {
   const listItem = document.createElement("li");
   const article = document.createElement("article");
 
   const seatStatus = getSeatStatus(eventItem.seats);
+
+  // Reflect state: add full class if no seats remain (B3)
+  if (eventItem.seats === 0) {
+    listItem.classList.add("full");
+  }
 
   // 1. Heading
   const heading = document.createElement("h3");
@@ -195,7 +188,13 @@ function createEventCard(eventItem) {
   const seatsParagraph = document.createElement("p");
   const seatsLabel = document.createElement("strong");
   seatsLabel.textContent = "Seats: ";
-  seatsParagraph.append(seatsLabel, document.createTextNode(`${eventItem.seats} (${seatStatus})`));
+  const seatsText = document.createTextNode(`${eventItem.seats} (${seatStatus})`);
+  seatsParagraph.append(seatsLabel, seatsText);
+
+  // Visual styling reflection (B3)
+  if (eventItem.seats === 0) {
+    seatsParagraph.style.color = "var(--ink-muted)";
+  }
 
   // 6. Mode (Online / In-Person)
   const modeParagraph = document.createElement("p");
@@ -207,7 +206,7 @@ function createEventCard(eventItem) {
   const description = document.createElement("p");
   description.textContent = eventItem.description || "";
 
-  // 8. RSVP / Action Button
+  // 8. RSVP Button
   const rsvpButton = document.createElement("button");
   rsvpButton.type = "button";
   rsvpButton.className = "rsvp-button";
@@ -215,6 +214,7 @@ function createEventCard(eventItem) {
 
   if (eventItem.seats === 0) {
     rsvpButton.disabled = true;
+    rsvpButton.setAttribute("aria-disabled", "true"); // setAttribute (B3)
     rsvpButton.textContent = "Event Full";
   } else {
     rsvpButton.textContent = "RSVP / Register";
@@ -236,26 +236,22 @@ function createEventCard(eventItem) {
 }
 
 /**
- * Render the event cards into the DOM by mapping the events array.
- * This ensures the array of objects is the single source of truth the page is built from.
+ * Render events into the grid wrapper by mapping the array of objects (B2)
  */
 function renderEvents(itemsToRender = events) {
   const eventsList = document.querySelector(".events-grid-wrapper ul");
   if (!eventsList) return;
 
-  // Use Array.prototype.map to transform event objects into card DOM elements
+  // Transform each event into its DOM element using .map()
   const eventCards = itemsToRender.map(createEventCard);
   eventsList.replaceChildren(...eventCards);
 }
 
-/**
- * Map the events array to populate the registration dropdown options (<select id="event">).
- */
+
 function renderEventDropdownOptions(itemsToRender = events) {
   const eventSelect = document.querySelector("#event");
   if (!eventSelect) return;
 
-  // Map each event object to an HTML <option> element
   const options = itemsToRender.map((ev) => {
     const option = document.createElement("option");
     option.value = ev.id;
@@ -271,14 +267,56 @@ function renderEventDropdownOptions(itemsToRender = events) {
   eventSelect.replaceChildren(...options);
 }
 
-// ------------------------------------------------------------------------------
-// 3. DOM INITIALIZATION & USER INTERACTIONS
-// ------------------------------------------------------------------------------
+async function loadEventsFromJSON() {
+  const eventsList = document.querySelector(".events-grid-wrapper ul");
+  if (!eventsList) return;
+
+  const wrapper = eventsList.parentElement;
+  let statusEl = wrapper.querySelector(".events-status");
+  if (!statusEl) {
+    statusEl = document.createElement("p");
+    statusEl.className = "events-status";
+    statusEl.setAttribute("role", "status");
+    statusEl.setAttribute("aria-live", "polite");
+    wrapper.insertBefore(statusEl, eventsList);
+  }
+
+  // State 1: Loading
+  statusEl.textContent = "Loading events…";
+
+  try {
+    const response = await fetch("events.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error("Invalid data format: Expected array of events");
+    }
+
+    // State 2: Success
+    renderEvents(data);
+    renderEventDropdownOptions(data);
+    statusEl.textContent = `Showing ${data.length} campus events loaded from JSON.`;
+  } catch (error) {
+    // State 3: Failure
+    console.warn("Async fetch notice (using single source of truth fallback):", error.message);
+    statusEl.textContent = "Displaying campus events from local data model.";
+    renderEvents(events);
+    renderEventDropdownOptions(events);
+  }
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Mobile Hamburger Menu Navigation Toggle
+  // B1: Select elements with querySelector / querySelectorAll & getElementById
   const hamburger = document.querySelector(".hamburger");
   const navLinks = document.querySelector(".nav-links");
+  const searchInput = document.getElementById("eventSearch");
+  const eventsList = document.querySelector(".events-grid-wrapper ul");
+  const registrationForm = document.querySelector("#registration form");
 
+  // Dynamic responsive style hook for mobile menu toggle
   if (!document.querySelector("#event-manager-nav-style")) {
     const navStyle = document.createElement("style");
     navStyle.id = "event-manager-nav-style";
@@ -286,6 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(navStyle);
   }
 
+  // B4: Wire up a click — hamburger toggles navigation links with classList.toggle
   if (hamburger && navLinks) {
     hamburger.addEventListener("click", () => {
       navLinks.classList.toggle("show");
@@ -301,19 +340,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Build the page from the single source of truth (events array)
+  // Initialize events view: First render from Single Source of Truth, then try async load (B7)
   renderEvents(events);
   renderEventDropdownOptions(events);
+  loadEventsFromJSON();
 
-  // Setup Search Filter
-  const searchInput = document.getElementById("eventSearch");
-  const eventsWrapper = document.querySelector(".events-grid-wrapper");
-
+  // B6: React to typing — input listener on search box & Escape keydown to clear
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.trim().toLowerCase();
 
-      // Filter events based on title, venue, description, or mode
+      // Filter events using arrow function (A7)
       const filtered = events.filter((ev) => {
         const titleMatch = ev.title.toLowerCase().includes(query);
         const venueMatch = (ev.venue || "").toLowerCase().includes(query);
@@ -322,9 +359,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return titleMatch || venueMatch || descMatch || modeMatch;
       });
 
-      // Map and render the filtered events
       renderEvents(filtered);
 
+      const eventsWrapper = document.querySelector(".events-grid-wrapper");
       let noResults = document.querySelector(".no-search-results");
       if (filtered.length === 0 && query) {
         if (!noResults) {
@@ -350,10 +387,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Setup RSVP Button Clicks: smooth scroll and auto-select in form
-  const eventsList = document.querySelector(".events-grid-wrapper ul");
+  // B5: Use the event object — read event.target to know which RSVP button was clicked
   if (eventsList) {
     eventsList.addEventListener("click", (event) => {
+      // event.target tells us the exact element that triggered the event (delegation)
       const rsvpButton = event.target.closest(".rsvp-button");
       if (!rsvpButton || !eventsList.contains(rsvpButton)) return;
 
@@ -372,8 +409,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Registration Form Validation
-  const registrationForm = document.querySelector("#registration form");
   if (registrationForm) {
     const nameInput = registrationForm.querySelector("#name");
     const rollInput = registrationForm.querySelector("#roll");
@@ -381,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const courseInput = registrationForm.querySelector("#course");
     const eventSelect = registrationForm.querySelector("#event");
 
+    // Built-in checks
     if (nameInput) {
       nameInput.required = true;
       nameInput.minLength = 2;
@@ -407,6 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
       eventSelect.required = true;
     }
 
+    // Custom validation: Name must contain >= 2 non-whitespace characters
     if (nameInput) {
       nameInput.setCustomValidity("");
       nameInput.addEventListener("input", () => {
@@ -419,6 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    // Submit handler
     registrationForm.addEventListener("submit", (event) => {
       if (nameInput) {
         const cleanName = nameInput.value.trim();
@@ -427,12 +465,14 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
 
+      // Block invalid submission
       if (!registrationForm.checkValidity()) {
         event.preventDefault();
         registrationForm.reportValidity();
         return;
       }
 
+      // Valid submission handling
       event.preventDefault();
 
       let successMessage = registrationForm.querySelector(".form-success");
@@ -444,44 +484,44 @@ document.addEventListener("DOMContentLoaded", () => {
         registrationForm.appendChild(successMessage);
       }
 
-      successMessage.textContent =
-        "Your form passed validation. Registration successfully recorded for " +
-        (eventSelect.options[eventSelect.selectedIndex]?.text || "the event") +
-        "!";
+      const selectedTitle = eventSelect.options[eventSelect.selectedIndex]?.text || "the event";
+      successMessage.textContent = `Your registration form passed validation! Successfully registered for ${selectedTitle}.`;
     });
   }
 });
 
-// ------------------------------------------------------------------------------
-// 4. LAB ASSIGNMENT DATA CHECKS & VERIFICATIONS
-// ------------------------------------------------------------------------------
 
-// Read single values via dot and index notation
-console.log(events[0].title);
-console.log(events[events.length - 1].seats);
 
-// Serialize to JSON and parse back to verify single source of truth consistency
+// B9 & JSON/XML B2: Read one value via dot and index notation
+console.log("--- [JSON B2] First Event Title:", events[0].title);
+console.log("--- [JSON B2] Last Event Seats:", events[events.length - 1].seats);
+
+// JSON/XML B3: Round-trip serialization & deserialization (Object -> text -> object)
 const jsonString = JSON.stringify(events, null, 2);
-console.log(jsonString);
+console.log("--- [JSON B3] Serialized JSON String (sample):", jsonString.slice(0, 150) + "...\n");
 
 const parsedAgain = JSON.parse(jsonString);
-console.log(JSON.stringify(parsedAgain) === JSON.stringify(events));
+const isRoundTripIdentical = JSON.stringify(parsedAgain) === JSON.stringify(events);
+console.log("--- [JSON B3] Round-trip Match (parsedAgain === events):", isRoundTripIdentical);
 
-// Comparison between JSON and XML representations
+// JSON/XML B4 & B5: Read XML using DOMParser and benchmark byte sizes
 Promise.all([
   fetch("events.json").then((response) => response.text()),
   fetch("events.xml").then((response) => response.text())
 ])
   .then(([jsonText, xmlText]) => {
-    console.log("JSON Size:", new Blob([jsonText]).size, "bytes");
-    console.log("XML Size:", new Blob([xmlText]).size, "bytes");
+    // B5: Size comparison
+    const jsonSize = new Blob([jsonText]).size;
+    const xmlSize = new Blob([xmlText]).size;
+    console.log(`--- [JSON/XML B5] File Sizes: JSON = ${jsonSize} bytes | XML = ${xmlSize} bytes`);
 
-    if (jsonText.length > xmlText.length) {
+    if (jsonSize > xmlSize) {
       console.log("JSON file is larger.");
     } else {
-      console.log("XML file is larger.");
+      console.log("XML file is larger (due to repeated opening and closing tags and verbose markup).");
     }
 
+    // B4: Parse XML with DOMParser and extract the first title
     const xmlDoc = new DOMParser().parseFromString(xmlText, "application/xml");
     const firstTitleEl = xmlDoc.getElementsByTagName("title")[0];
     const xmlTitleP = document.getElementById("xmlTitle");
@@ -490,5 +530,5 @@ Promise.all([
     }
   })
   .catch((err) => {
-    console.log("Note on fetch (e.g. file:// protocol):", err.message);
+    console.log("Note on fetch (e.g. running via file:// protocol):", err.message);
   });

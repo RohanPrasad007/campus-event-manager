@@ -1,6 +1,187 @@
-Team Leader: Rohan Prasad - 20261651074
-Member 1: Khushi Sharma - 20261651050
-Member 2: Abhijeet Garg - 20261651001
-Member 3: Kashish - 20261651049
-Member 4: Ayush Chandra - 20261651026
+================================================================================
+IIIT VADODARA — CAMPUS EVENT MANAGER (WEB DEVELOPMENT LAB P5)
+PROJECT NOTES & ASSIGNMENT SUBMISSION DOCUMENT
+================================================================================
 
+--------------------------------------------------------------------------------
+👥 PROJECT TEAM ROSTER & 5-PERSON WORK DIVISION
+--------------------------------------------------------------------------------
+
+1. Team Leader: Rohan Prasad (Student ID: 20261651074)
+   Role: Lead System Architecture, Data Modeling & State Management
+   Assigned Tasks:
+   - A1: Project structuring, repository setup, and script.js integration with defer.
+   - A2: Variable declarations using const and let (string, number, boolean, no var).
+   - A3: Modeling events as an array of objects as the Single Source of Truth.
+   - A4: Control flow seat availability logic (Full, Few left, Open).
+   - JSON/XML B2 & B3: Object property dot/index access and JSON round-trip serialization.
+
+2. Member 1: Khushi Sharma (Student ID: 20261651050)
+   Role: Dynamic DOM Rendering & Array Transformation Specialist
+   Assigned Tasks:
+   - B1: Selecting core DOM elements using querySelector and querySelectorAll.
+   - B2: Dynamic card generation (createElement, textContent, appendChild).
+   - B3: State presentation using classList.add, style, and setAttribute (.full class).
+   - A6 & A7: Logic packaging in formatEvent() and array transformations with map()/filter().
+   - Dynamic synchronization of registration <select id="event"> dropdown options.
+
+3. Member 2: Abhijeet Garg (Student ID: 20261651001)
+   Role: Interactive Events, Mobile Navigation & Asynchronous Fetching
+   Assigned Tasks:
+   - B4: Hamburger mobile menu click listener with classList.toggle.
+   - B5: Event delegation and reading event.target for card RSVP button clicks.
+   - B7 & JSON/XML B1: Asynchronous data loading with fetch('events.json') + await,
+     handling all three states: "Loading...", success rendering, and friendly error catch.
+   - Documenting variable scope (A8) and event bubbling theory (B5) in NOTES.
+
+4. Member 3: Kashish (Student ID: 20261651049)
+   Role: Real-Time Search Interaction & Client-Side Form Validation
+   Assigned Tasks:
+   - A5: Walking data collections using for...of loops and item processing.
+   - B6: Real-time search filter input listener with Escape keydown reset.
+   - B8: Registration form validation with built-in constraints (required, email, pattern),
+     custom validity via setCustomValidity(), and submission interception (preventDefault).
+   - Documenting why server-side validation is mandatory (B8) in NOTES.
+
+5. Member 4: Ayush Chandra (Student ID: 20261651026)
+   Role: Data Architecture, Schema Validation & Benchmarking (JSON vs XML)
+   Assigned Tasks:
+   - JSON/XML A1–A3: Authoring events.json and events.xml with matching data structures.
+   - JSON/XML A4 & A5: Architecture of elements vs attributes and ISO-8601 date adherence.
+   - JSON/XML B4 & B5: Loading and parsing events.xml with DOMParser, displaying the first
+     title, and benchmarking byte sizes (JSON vs XML).
+   - JSON/XML C1–C3: Schema validation rules, testing intentional JSON syntax errors,
+     and evaluating JSON vs XML tradeoffs.
+
+================================================================================
+SECTION A & B · JAVASCRIPT & DOM NOTES
+================================================================================
+
+[A8] SCOPE: Why a const declared inside a function cannot be seen outside it:
+--------------------------------------------------------------------------------
+In JavaScript, variables declared with `const` or `let` possess block scope and
+function scope. When a function is invoked, the JavaScript engine creates a new
+execution context and lexical environment for that function. A `const` declared
+within this block is bound strictly to that local environment. Once the function
+finishes execution, its local scope is popped off the call stack. Code executing
+in the outer or global scope has no visibility into or reference to the inner
+environment, preventing accidental naming collisions and memory leaks.
+
+[B5] EVENT BUBBLING: Explanation of how it works and why it matters:
+--------------------------------------------------------------------------------
+When a user interacts with a page (e.g. clicking an RSVP button), the event travels
+in three phases:
+1. Capturing Phase: The event trickles down from the window/document to the target.
+2. Target Phase: The event reaches the target element (event.target).
+3. Bubbling Phase: The event triggers on the target, then bubbles straight up
+   through each ancestor element in the DOM hierarchy:
+   button -> article -> li -> ul -> div -> section -> main -> body -> document.
+
+Event bubbling enables "Event Delegation": instead of attaching separate click
+event listeners to dozens of individual card buttons (which degrades performance),
+we attach a single click listener to the parent <ul> container. Inside the listener,
+`event.target` identifies the precise element clicked, and `.closest(".rsvp-button")`
+captures the exact button clicked.
+
+[B8] VALIDATION: Why the server must still re-check all submitted data:
+--------------------------------------------------------------------------------
+Client-side validation (HTML constraints like required, pattern, and JavaScript
+setCustomValidity) is designed exclusively for user experience: it provides instant,
+responsive feedback and saves unnecessary network roundtrips.
+However, client-side validation provides ZERO security:
+1. A user can disable JavaScript in their browser with one click.
+2. Form attributes and validation rules can be modified or deleted in DevTools.
+3. Requests can be sent directly to the backend API without using a browser at all
+   (via curl, Postman, scripts, or automated bots).
+Therefore, the server must always perform strict, authoritative re-validation and
+sanitization of all incoming data before processing or storing it.
+
+================================================================================
+SECTION A, B & C · JSON & XML NOTES
+================================================================================
+
+[JSON/XML A1] EVENT DATA TABLE:
+--------------------------------------------------------------------------------
+id              | title                                    | date       | seats | online
+----------------+------------------------------------------+------------+-------+-------
+tech-fest       | Tech Fest - Innovision                   | 2026-09-12 | 12    | false
+cultural-night  | Cultural Night - Rangmanch               | 2026-09-20 | 4     | false
+sports-meet     | Inter-Hostel Sports Meet                 | 2026-09-28 | 0     | false
+ai-lecture      | Guest Lecture on Artificial Intelligence | 2026-10-05 | 50    | true
+hackathon       | Coding Hackathon - CodeStorm             | 2026-10-15 | 100   | false
+web-workshop    | Workshop on Web Development              | 2026-10-22 | 25    | true
+photography     | Photography Exhibition - Frames          | 2026-10-30 | 40    | false
+alumni-meet     | Annual Alumni Meet                       | 2026-11-08 | 150   | false
+
+[JSON/XML A4] ELEMENT VS ATTRIBUTE JUSTIFICATION:
+--------------------------------------------------------------------------------
+In events.xml:
+- `id` is an attribute: <event id="tech-fest">
+  Justification: `id` is unique identification metadata about the entity rather
+  than human-facing content. Attributes are ideal for identifiers and classifiers.
+- `title`, `date`, `time`, `venue`, `seats`, `online`, `description` are elements:
+  Justification: These are the actual informational content of the event. Elements
+  are readable, can contain multi-line text, support child sub-elements if expanded
+  later, and preserve semantic data boundaries cleanly.
+
+[JSON/XML A5] DATES AND TYPES IN JSON & XML:
+--------------------------------------------------------------------------------
+Neither JSON nor XML supports a native "Date" primitive:
+- In XML, everything is stored purely as text (string values) with no native data
+  types for numbers, booleans, or dates.
+- In JSON, numbers, booleans, strings, arrays, and objects are supported, but there
+  is no built-in Date type.
+Convention Used:
+We store all dates using the ISO-8601 format: `YYYY-MM-DD` (e.g., `2026-09-12`).
+Why it is unambiguous worldwide:
+ISO-8601 orders units hierarchically from largest to smallest (Year-Month-Day).
+This prevents cultural ambiguity (e.g. 05-06 meaning May 6th vs June 5th) and ensures
+dates sort chronologically in natural alphabetical/lexicographical order.
+
+[JSON/XML C1] INTENTIONAL JSON ERROR TEST & RESOLUTION:
+--------------------------------------------------------------------------------
+Mistake Introduced:
+Added a trailing comma after the final property of the last event in events.json:
+  "online": false,
+}
+
+Exact Validator Error:
+JSON.parse error / jsonlint.com:
+"SyntaxError: Expected double-quoted property name in JSON at position 2831"
+
+Resolution:
+Deleted the trailing comma after `false`. In JSON, commas are strictly separators
+between items, not terminators; trailing commas are invalid syntax.
+
+[JSON/XML C2] THREE SCHEMA VALIDATION RULES:
+--------------------------------------------------------------------------------
+1. Rule 1 (Title): `title` must be a non-empty string with length between 2 and 100 characters.
+2. Rule 2 (Identifier): `id` must be present, unique across all events, and contain only
+   lowercase alphanumeric characters and hyphens.
+3. Rule 3 (Date): `date` must conform to the ISO-8601 standard (`YYYY-MM-DD`) representing
+   a valid calendar date.
+
+Why validating first matters:
+Untrusted or malformed data can crash frontend scripts, cause silent rendering bugs,
+or break logical control flow (e.g. if `seats` is a string instead of a number,
+comparisons like `seats === 0` or `seats < 5` fail). Validating data before usage
+guarantees system resilience and data integrity.
+
+[JSON/XML C3] FORMAT DECISION & REAL-WORLD COMPARISON:
+--------------------------------------------------------------------------------
+Format Chosen for our Event Board: JSON
+Justification:
+1. Native JavaScript compatibility: Parsed directly into native objects with
+   JSON.parse() or response.json() without manual DOM traversal.
+2. Compact & Lightweight: No duplicate closing tags, resulting in significantly
+   smaller file sizes (2832 bytes for JSON vs 2951 bytes for XML).
+3. Universal standard: JSON is the standard interchange format for modern REST
+   APIs and web applications.
+
+Real Scenario where XML is the Better Choice:
+Enterprise banking and financial clearing systems (e.g., SWIFT and ISO 20022 message
+standards) and SOAP web services. In these environments, XML's formal XML Schema
+Definition (XSD), XML namespaces, and cryptographic XML Digital Signatures (XMLDSig)
+are mandatory requirements for auditability, contract validation, and legacy system
+interoperability.
+================================================================================

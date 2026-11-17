@@ -8,13 +8,13 @@ Developed as part of the **MCA Semester 1 — Web Development Lab (P5)**.
 
 ## 👥 Project Team
 
-| Role | Name | Student ID |
-| :--- | :--- | :--- |
-| **Team Leader** | Rohan Prasad | `20261651074` |
-| **Member 1** | Khushi Sharma | `20261651050` |
-| **Member 2** | Abhijeet Garg | `20261651001` |
-| **Member 3** | Kashish | `20261651049` |
-| **Member 4** | Ayush Chandra | `20261651026` |
+| Role | Name | Student ID | Assigned Work / Module |
+| :--- | :--- | :--- | :--- |
+| **Team Leader** | Rohan Prasad | `20261651074` | Architecture, Data Modeling (`events`), State Management & Round-trip JSON |
+| **Member 1** | Khushi Sharma | `20261651050` | Dynamic DOM Rendering (`map()`, `createElement`), Styling States & Function Packaging |
+| **Member 2** | Abhijeet Garg | `20261651001` | Mobile Menu Toggle, Event Delegation (`event.target`) & Asynchronous Fetch (`async/await`) |
+| **Member 3** | Kashish | `20261651049` | Real-time Search Filter, Keyboard Events (`Escape`) & Custom Form Validation |
+| **Member 4** | Ayush Chandra | `20261651026` | Data Architect (`events.json` / `events.xml`), XML DOMParser & Byte Size Benchmarking |
 
 ---
 
@@ -286,16 +286,14 @@ function formatEvent(ev) {
 }
 
 const formattedEvent = formatEvent(event);
-
 console.log(formattedEvent);
+```
 
-/* Hamburger Navigation Toggle */
+---
 
-.nav-links {
-    display: none;
-}
-
-.nav-links.active {
-    display: flex;
-    flex-direction: column;
-}
+### 13. Dynamic DOM Rendering & Mapping (Section B)
+- **DOM Creation**: Cards generated dynamically from data using `createElement`, `textContent`, `classList.add`, and `appendChild`.
+- **Search Filter**: Real-time filtering with input and `Escape` key handling.
+- **Event Delegation**: Centralized click handling reading `event.target` for card RSVP buttons.
+- **Form Validation**: Strict client-side checks with custom rules (`setCustomValidity`).
+- **Data Formats**: Dual JSON & XML data representation with `fetch()`, `DOMParser`, and byte size benchmarks.
